@@ -1,0 +1,101 @@
+# =============================================================================
+# Node.js
+# =============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.npm/
+.yarn/
+
+# Build output
+dist/
+build/
+out/
+*.zip
+function.zip
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Environment files — NEVER commit these
+.env
+.env.*
+!.env.example
+!.env.test.example
+
+# =============================================================================
+# Terraform
+# =============================================================================
+
+# Local state files — store in remote backend (S3 + DynamoDB) for team use
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Sensitive variable files
+*.tfvars
+*.tfvars.json
+!terraform.tfvars.example
+
+# Override files (local customisations)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform lock file — DO commit this to pin provider versions
+# .terraform.lock.hcl  <-- intentionally not ignored
+
+# Terraform directories
+.terraform/
+.terraform.tfstate.lock.info
+
+# Terraform plan files
+tfplan
+*.tfplan
+
+# =============================================================================
+# AWS / Cloud
+# =============================================================================
+.aws/
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# =============================================================================
+# IDE and editor files
+# =============================================================================
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json.example
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =============================================================================
+# Logs
+# =============================================================================
+logs/
+*.log
+*.log.*
+
+# =============================================================================
+# Temporary files
+# =============================================================================
+tmp/
+temp/
+.cache/

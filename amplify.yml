@@ -1,0 +1,56 @@
+version: 1
+
+# ---------------------------------------------------------------------------
+# Frontend — React SPA
+# ---------------------------------------------------------------------------
+frontend:
+  phases:
+    preBuild:
+      commands:
+        # Ensure Node 20 is active (Amplify supports nvm)
+        - nvm use 20 || nvm install 20 && nvm use 20
+        - node --version
+        - npm --version
+        # Install dependencies with a clean install for reproducible builds
+        - npm ci
+
+    build:
+      commands:
+        # Inject runtime environment variables from Amplify's environment
+        # These are set by Terraform via aws_amplify_app.environment_variables
+        - echo "Building for environment $REACT_APP_ENVIRONMENT"
+        - npm run build
+
+    postBuild:
+      commands:
+        # Print the build manifest for debugging
+        - ls -lh build/
+
+  artifacts:
+    # Directory that contains the deployable static files
+    baseDirectory: build
+    files:
+      - '**/*'
+
+  cache:
+    # Cache node_modules between builds to speed up installs
+    paths:
+      - node_modules/**/*
+
+# ---------------------------------------------------------------------------
+# Test phase (runs before build on PR previews when configured)
+# ---------------------------------------------------------------------------
+test:
+  phases:
+    preTest:
+      commands:
+        - nvm use 20
+        - npm ci
+    test:
+      commands:
+        # Run unit tests; CI=true makes React scripts fail on warnings
+        - CI=true npm test -- --watchAll=false --coverage
+  artifacts:
+    baseDirectory: coverage
+    files:
+      - '**/*'
